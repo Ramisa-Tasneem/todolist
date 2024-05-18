@@ -1,0 +1,109 @@
+body {
+    background-image: url('background.jpg');
+    background-size: cover;
+    background-repeat: no-repeat;
+    display: flex; /* Center the container horizontally and vertically */
+    justify-content: center;
+    align-items: center;
+    height: 100vh; /* Make the background cover the entire viewport height */
+    margin: 0; /* Remove default margin */
+    font-family: 'Arial', sans-serif; /* Set a default font for the body */
+}
+
+.container {
+    width: 40%; /* Adjusted width */
+    padding: 20px;
+    background-color: rgba(154, 123, 79, 0.8); /* Dark brown background color with transparency */
+    border-radius: 20px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5); /* Adjust the shadow color */
+    min-height: 40vh; /* Decreased height */
+}
+
+h1 {
+    text-align: center;
+    color: rgb(94, 62, 51); /* Dark brown color for the title */
+    font-family: 'Georgia', serif; /* Change the font of the title */
+}
+
+#task-input {
+    width: calc(100% - 122px); /* Adjust width to fit the container with button */
+    padding: 8px;
+    margin-bottom: 10px;
+    font-family: 'Arial', sans-serif; /* Set font for input field */
+    border: 1px solid #9A7B4F; /* Add border to match the container color */
+    border-radius: 5px; /* Rounded corners for input */
+    color: #000; /* Changed text color to black */
+    font-size: 16px; /* Increased font size */
+    box-sizing: border-box; /* Ensure padding is included in the width */
+}
+
+#add-task-btn {
+    padding: 8px 16px;
+    background-color: #9A7B4F; /* Button background color to match the theme */
+    color: #fff; /* White text color */
+    border: none; /* Remove default border */
+    border-radius: 5px; /* Rounded corners for button */
+    cursor: pointer; /* Pointer cursor on hover */
+    font-family: 'Arial', sans-serif; /* Set font for button */
+    margin-left: 10px;
+}
+
+#add-task-btn:hover {
+    background-color: #7B5F41; /* Darker shade on hover */
+}
+
+#clear-all-btn {
+    display: block;
+    margin: 20px auto;
+    background-color: #9A7B4F; /* Button background color to match the theme */
+    color: #fff; /* White text color */
+    border: none; /* Remove default border */
+    border-radius: 5px; /* Rounded corners for button */
+    cursor: pointer; /* Pointer cursor on hover */
+    font-family: 'Arial', sans-serif; /* Set font for button */
+    padding: 10px 20px;
+}
+
+#clear-all-btn:hover {
+    background-color: #7B5F41; /* Darker shade on hover */
+}
+
+ul {
+    list-style-type: none; /* Remove default list style */
+    padding: 0; /* Remove default padding */
+}
+
+li {
+    padding: 8px; /* Decreased padding */
+    background-color: rgba(255, 255, 255, 0.8); /* Light background for tasks with transparency */
+    margin-bottom: 10px;
+    border-radius: 5px; /* Rounded corners for task items */
+    display: flex;
+    justify-content: space-between; /* Space out the task text and buttons */
+    align-items: center; /* Center items vertically */
+    font-family: 'Arial', sans-serif; /* Set font for tasks */
+}
+
+li span.completed {
+    filter: blur(1px); /* Less intense blur effect for completed tasks */
+    color: rgba(0, 0, 0, 0.6); /* Dim the text color slightly */
+}
+
+.edit-btn, .delete-btn {
+    background-color: #FF6347; /* Tomato color for buttons */
+    color: #fff; /* White text color */
+    border: none; /* Remove default border */
+    border-radius: 5px; /* Rounded corners for button */
+    cursor: pointer; /* Pointer cursor on hover */
+    padding: 5px 10px;
+    margin-left: 5px;
+}
+
+.edit-btn:hover, .delete-btn:hover {
+    background-color: #FF4500; /* Darker shade on hover */
+}
+
+.button-group {
+    display: flex; /* Align edit and delete buttons in a row */
+    gap: 5px; /* Space between buttons */
+}
