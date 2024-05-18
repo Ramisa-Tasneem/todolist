@@ -43,7 +43,7 @@ document.addEventListener('DOMContentLoaded', function() {
     // Event delegation for marking a task as completed, editing or deleting it
     taskList.addEventListener('click', function(event) {
         const target = event.target;
-        if (target.tagName === 'INPUT') {
+        if (target.tagName === 'INPUT' && target.type === 'checkbox') {
             const task = target.nextElementSibling; // span element
             if (target.checked) {
                 task.classList.add('completed');
@@ -53,13 +53,52 @@ document.addEventListener('DOMContentLoaded', function() {
         } else if (target.classList.contains('delete-btn')) {
             target.parentElement.parentElement.remove();
         } else if (target.classList.contains('edit-btn')) {
-            const task = target.parentElement.previousElementSibling; // span element
-            const newTaskContent = prompt("Edit your task:", task.textContent);
-            if (newTaskContent !== null && newTaskContent.trim() !== "") {
-                task.textContent = newTaskContent.trim();
-            }
+            handleEditTask(target);
         }
     });
+
+    // Function to handle editing a task
+    function handleEditTask(button) {
+        const taskItem = button.parentElement.parentElement;
+        const taskSpan = taskItem.querySelector('span');
+        const currentText = taskSpan.textContent;
+
+        // Create an input field for editing
+        const inputField = document.createElement('input');
+        inputField.type = 'text';
+        inputField.value = currentText;
+        inputField.className = 'edit-input';
+
+        // Replace the task span with the input field
+        taskSpan.replaceWith(inputField);
+        inputField.focus();
+
+        // Save the changes when the user presses Enter or clicks outside
+        inputField.addEventListener('blur', () => {
+            saveEdit(inputField, taskItem);
+        });
+
+        inputField.addEventListener('keypress', (event) => {
+            if (event.key === 'Enter') {
+                saveEdit(inputField, taskItem);
+            }
+        });
+    }
+
+    // Function to save the edited task
+    function saveEdit(inputField, taskItem) {
+        const newText = inputField.value.trim();
+        const taskSpan = document.createElement('span');
+        taskSpan.textContent = newText;
+
+        // Replace the input field with the updated task span
+        inputField.replaceWith(taskSpan);
+
+        // Reapply completed class if the task was completed
+        if (taskItem.querySelector('input[type="checkbox"]').checked) {
+            taskSpan.classList.add('completed');
+        }
+    }
 
     // Event listener for clearing all tasks
     clearAllBtn.addEventListener('click', function() {
@@ -68,7 +107,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // Function to add drag and drop handlers to a task item
     function addDragAndDropHandlers(taskItem) {
-        taskItem.addEventListener('dragstart', function(e) {
+        taskItem.addEventListener('dragstart', function() {
             draggedItem = taskItem;
             setTimeout(function() {
                 taskItem.style.display = 'none';
