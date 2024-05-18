@@ -4,9 +4,12 @@ document.addEventListener('DOMContentLoaded', function() {
     const taskList = document.getElementById('task-list');
     const clearAllBtn = document.getElementById('clear-all-btn');
 
+    let draggedItem = null;
+
     // Function to add a new task
     function addTask(taskContent) {
         const taskItem = document.createElement('li');
+        taskItem.setAttribute('draggable', true);
         taskItem.innerHTML = `
             <input type="checkbox">
             <span>${taskContent}</span>
@@ -16,6 +19,8 @@ document.addEventListener('DOMContentLoaded', function() {
             </div>
         `;
         taskList.appendChild(taskItem);
+
+        addDragAndDropHandlers(taskItem);
     }
 
     // Event listener for adding a task
@@ -60,4 +65,44 @@ document.addEventListener('DOMContentLoaded', function() {
     clearAllBtn.addEventListener('click', function() {
         taskList.innerHTML = ''; // Clear all tasks from the list
     });
+
+    // Function to add drag and drop handlers to a task item
+    function addDragAndDropHandlers(taskItem) {
+        taskItem.addEventListener('dragstart', function(e) {
+            draggedItem = taskItem;
+            setTimeout(function() {
+                taskItem.style.display = 'none';
+            }, 0);
+        });
+
+        taskItem.addEventListener('dragend', function() {
+            setTimeout(function() {
+                draggedItem.style.display = 'flex';
+                draggedItem = null;
+            }, 0);
+        });
+
+        taskItem.addEventListener('dragover', function(e) {
+            e.preventDefault();
+        });
+
+        taskItem.addEventListener('dragenter', function(e) {
+            e.preventDefault();
+            taskItem.style.border = '2px dashed #9A7B4F';
+        });
+
+        taskItem.addEventListener('dragleave', function() {
+            taskItem.style.border = 'none';
+        });
+
+        taskItem.addEventListener('drop', function() {
+            taskItem.style.border = 'none';
+            if (draggedItem) {
+                taskList.insertBefore(draggedItem, taskItem);
+            }
+        });
+    }
+
+    // Add drag and drop handlers to existing tasks
+    Array.from(taskList.children).forEach(addDragAndDropHandlers);
 });
